@@ -26,8 +26,17 @@ router.delete('/:id', validatePostId, async (req, res) => {
   }
 });
 
-router.delete('/:id', (req, res) => {
+router.put('/:id', validatePostId, validatePost, async (req, res) => {
+  const { id } = req.post;
+  const { text } = req.body;
 
+  try {
+    await Posts.update(id, { text });
+    const post = await Posts.getById(id);
+    return res.status(200).json(post);
+  } catch (error) {
+    res.status(500).json({ error: 'Error saving changes' });
+  }
 });
 
 router.put('/:id', (req, res) => {
