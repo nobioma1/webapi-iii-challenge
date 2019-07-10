@@ -55,8 +55,14 @@ router.get('/:id/posts', validateUserId, async (req, res) => {
   }
 });
 
-router.delete('/:id', (req, res) => {
-
+router.delete('/:id', validateUserId, async (req, res) => {
+  const userId = req.user.id;
+  try {
+    await Users.remove(userId);
+    res.status(204).end();
+  } catch (error) {
+    res.status(500).json({ error: 'Error deleting user, try again...' });
+  }
 });
 
 router.put('/:id', (req, res) => {
