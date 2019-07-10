@@ -17,8 +17,16 @@ router.post('/', validateUser, async (req, res) => {
   }
 });
 
-router.post('/:id/posts', (req, res) => {
+router.post('/:id/posts', validateUserId, validatePost, async (req, res) => {
+  const { text } = req.body;
+  const { id } = req.user;
 
+  try {
+    const post = await Posts.insert({ text, user_id: id });
+    return res.status(201).json(post);
+  } catch (error) {
+    res.status(500).json({ error: 'Error adding post, please try again' });
+  }
 });
 
 router.get('/', async (req, res) => {
