@@ -16,8 +16,14 @@ router.get('/:id', validatePostId, (req, res) => {
   res.status(200).json(req.post);
 });
 
-router.get('/:id', (req, res) => {
-
+router.delete('/:id', validatePostId, async (req, res) => {
+  const postId = req.post.id;
+  try {
+    await Posts.remove(postId);
+    res.status(204).end();
+  } catch (error) {
+    res.status(500).json({ error: 'Error deleting post, try again...' });
+  }
 });
 
 router.delete('/:id', (req, res) => {
