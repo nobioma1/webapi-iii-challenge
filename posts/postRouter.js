@@ -39,11 +39,18 @@ router.put('/:id', validatePostId, validatePost, async (req, res) => {
   }
 });
 
-router.put('/:id', (req, res) => {
-
-});
-
 // custom middleware
+
+async function validatePostId(req, res, next) {
+  const { id } = req.params;
+  const post = await Posts.getById(id);
+
+  if (!post) {
+    return res.status(400).json({ message: 'invalid post id' });
+  }
+  req.post = post;
+  next();
+}
 
 function validatePostId(req, res, next) {
 
