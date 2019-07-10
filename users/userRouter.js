@@ -38,12 +38,21 @@ router.get('/', async (req, res) => {
   }
 });
 
-router.get('/:id', (req, res) => {
-
+router.get('/:id', validateUserId, (req, res) => {
+  res.status(200).json(req.user);
 });
 
-router.get('/:id/posts', (req, res) => {
+router.get('/:id/posts', validateUserId, async (req, res) => {
+  const userId = req.user.id;
 
+  try {
+    const userPosts = await Users.getUserPosts(userId);
+    res.status(200).json(userPosts);
+  } catch (error) {
+    res
+      .status(500)
+      .json({ error: 'Error retrieving users posts, try again...' });
+  }
 });
 
 router.delete('/:id', (req, res) => {
