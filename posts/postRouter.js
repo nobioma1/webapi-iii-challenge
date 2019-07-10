@@ -1,8 +1,16 @@
-const express = 'express';
+const express = require('express');
+const Posts = require('../posts/postDb');
 
 const router = express.Router();
 
-router.get('/', (req, res) => {
+router.get('/', async (req, res) => {
+  try {
+    const posts = await Posts.get();
+    res.status(200).json(posts);
+  } catch (error) {
+    res.status(500).json({ error: 'Error retrieving all posts, try again...' });
+  }
+});
 
 });
 
