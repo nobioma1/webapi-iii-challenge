@@ -1,9 +1,20 @@
-const express = 'express';
+const express = require('express');
+const Users = require('./userDb');
+const Posts = require('../posts/postDb');
+const postRouter = require('../posts/postRouter');
 
 const router = express.Router();
+const validatePost = postRouter.validatePost;
 
-router.post('/', (req, res) => {
+router.post('/', validateUser, async (req, res) => {
+  const { name } = req.body;
 
+  try {
+    const user = await Users.insert({ name });
+    return res.status(201).json(user);
+  } catch (error) {
+    res.status(500).json({ error: 'User already exits' });
+  }
 });
 
 router.post('/:id/posts', (req, res) => {
