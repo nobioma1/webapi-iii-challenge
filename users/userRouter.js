@@ -65,8 +65,17 @@ router.delete('/:id', validateUserId, async (req, res) => {
   }
 });
 
-router.put('/:id', (req, res) => {
+router.put('/:id', validateUserId, validatePost, async (req, res) => {
+  const { name } = req.body;
+  const { id } = req.user;
 
+  try {
+    await Users.update(id, { name });
+    const user = await Users.getById(id);
+    return res.status(200).json(user);
+  } catch (error) {
+    res.status(500).json({ error: 'Error saving changes' });
+  }
 });
 
 //custom middleware
