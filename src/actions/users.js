@@ -1,5 +1,6 @@
 import axios from 'axios';
-export const USERS_URL = 'http://localhost:5000/api/users';
+
+export const USERS_URL = 'https://webapi-iii-challenge-be.herokuapp.com/api/users';
 
 export const USERS_ACTION_ERROR = 'USERS_ACTION_ERROR';
 export const USERS_ACTION_START = 'USERS_ACTION_START';

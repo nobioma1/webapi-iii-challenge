@@ -2,7 +2,7 @@ import axios from 'axios';
 
 import { USERS_URL } from './users';
 
-const POSTS_URL = 'http://localhost:5000/api/posts';
+const POSTS_URL = 'https://webapi-iii-challenge-be.herokuapp.com/api/posts';
 
 export const POSTS_ACTION_ERROR = 'POSTS_ACTION_ERROR';
 export const POSTS_ACTION_START = 'POSTS_ACTION_START';
