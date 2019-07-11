@@ -12,7 +12,12 @@ export const getUsers = () => async dispatch => {
     const users = await axios.get(USERS_URL);
     dispatch({ type: SUCCESS_GETTING_USERS, payload: users.data });
   } catch (error) {
-    dispatch({ type: USERS_ACTION_ERROR, payload: error.response.data.message });
+    if (error && error.response) {
+      dispatch({
+        type: USERS_ACTION_ERROR,
+        payload: error.response.data.message,
+      });
+    }
   }
 };
 
@@ -25,7 +30,12 @@ export const deleteUser = id => async dispatch => {
     dispatch({ type: SUCCESS_DELETING_USER });
     dispatch(getUsers());
   } catch (error) {
-    dispatch({ type: USERS_ACTION_ERROR, payload: error.response.data.message });
+    if (error && error.response) {
+      dispatch({
+        type: USERS_ACTION_ERROR,
+        payload: error.response.data.message,
+      });
+    }
   }
 };
 
@@ -37,7 +47,12 @@ export const getUserPosts = id => async dispatch => {
     const post = await axios.get(`${USERS_URL}/${id}/posts`);
     dispatch({ type: SUCCESS_GETTING_USER_POSTS, payload: post.data });
   } catch (error) {
-    dispatch({ type: USERS_ACTION_ERROR, payload: error.response.data.message });
+    if (error && error.response) {
+      dispatch({
+        type: USERS_ACTION_ERROR,
+        payload: error.response.data.message,
+      });
+    }
   }
 };
 
@@ -50,7 +65,11 @@ export const addUser = user => async dispatch => {
     dispatch({ type: SUCCESS_ADDING_USER });
     dispatch(getUsers());
   } catch (error) {
-    dispatch({ type: USERS_ACTION_ERROR, payload: error.response.data.error });
+    if (error && error.response) {
+      dispatch({
+        type: USERS_ACTION_ERROR,
+        payload: error.response.data.error,
+      });
+    }
   }
 };
-

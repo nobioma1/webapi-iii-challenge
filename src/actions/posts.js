@@ -15,7 +15,12 @@ export const getPosts = () => async dispatch => {
     const posts = await axios.get(POSTS_URL);
     dispatch({ type: SUCCESS_GETTING_POSTS, payload: posts.data });
   } catch (error) {
-    dispatch({ type: POSTS_ACTION_ERROR, payload: error.response.data.message });
+    if (error && error.response) {
+      dispatch({
+        type: POSTS_ACTION_ERROR,
+        payload: error.response.data.message,
+      });
+    }
   }
 };
 
