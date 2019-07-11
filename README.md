@@ -86,6 +86,8 @@ The _Database Schemas_ for the `users` and `posts` resources are:
 
 We have provided test data for the resources.
 
+URL: https://webapi-iii-challenge-be.herokuapp.com
+
 ## Stretch Goals
 
 - Add the Post Router
